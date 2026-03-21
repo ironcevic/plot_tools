@@ -57,7 +57,7 @@ def broaden(singlet_name, triplet_name, energy="eV", broadening=0.2,
   fig, ax_ev = plt.subplots(figsize=(6, 4))
   ax_ev.set_xlim(e_min, e_max)
   ax_ev.set_xlabel("energy (eV)")
-  ax_ev.set_ylabel("intensity")
+  ax_ev.set_ylabel("intensity (arb. units)")
   ax_ev.xaxis.set_ticks_position("bottom")
   ax_ev.xaxis.set_label_position("bottom")
 
