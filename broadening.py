@@ -13,8 +13,8 @@ colours = {
   "orange": "#FF5000",
   "grey": "#B3B3B3",
 }
-
 nm_ticks = np.array((400, 500, 600, 800, 1000, 1500, 3000))
+
 def broaden(singlet_name, triplet_name, energy="eV", broadening=0.2,
             e_min=0.0, e_max=3.5, n_points=1000,
             nm_ticks=nm_ticks):
@@ -29,7 +29,7 @@ def broaden(singlet_name, triplet_name, energy="eV", broadening=0.2,
   - e_max: maximum energy in eV on plot
   - nm_list: list of wavelengths in nm
   - n_points: number of points between e_min and e_max
-  Output:
+  Output:A
   - broadened spectrum as a pdf
   """
 
@@ -63,13 +63,14 @@ def broaden(singlet_name, triplet_name, energy="eV", broadening=0.2,
   ax_ev.xaxis.set_label_position("bottom")
 
   ax_nm = ax_ev.twiny()
+  ax_nm.set_xlim(e_min, e_max) # ensure twin axis has the same limits
   ax_nm.set_xlabel("wavelength (nm)")
   ax_nm.xaxis.set_ticks_position("top")
   ax_nm.xaxis.set_label_position("top")
   energy_ticks_for_nm = 1239.84193 / nm_ticks
   ax_nm.set_xticks(energy_ticks_for_nm)
-  ax_nm.set_xticklabels([f'{int(nm)}' for nm in nm_ticks])
-  
+  ax_nm.set_xticklabels(nm_ticks)
+ 
   # main bit
   if singlet == 1:
     # load data
@@ -106,6 +107,8 @@ def broaden(singlet_name, triplet_name, energy="eV", broadening=0.2,
     ax_ev.bar(triplet_e, -1, color=colours['orange'], width=0.05, alpha=0.5)
 
   ax_ev.axhline(0, color="black", linestyle="--")
+  ax_ev.axvline(3.2627419210526316, color="black", linestyle="--")
+  ax_ev.axvline(1.6531225733333335, color="black", linestyle="--")
   ax_ev.legend(frameon=False)
   plt.tight_layout()
   plt.savefig("figure.pdf")
