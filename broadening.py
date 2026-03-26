@@ -4,7 +4,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams['ps.fonttype'] = 42
-mpl.rcParams['font.size'] = 16
+mpl.rcParams['font.size'] = 14
 colours = {
   "green": "#00B828",
   "yellow": "#FFD900",
@@ -14,9 +14,10 @@ colours = {
   "grey": "#B3B3B3",
 }
 
+nm_ticks = np.array((400, 500, 600, 800, 1000, 1500, 3000))
 def broaden(singlet_name, triplet_name, energy="eV", broadening=0.2,
             e_min=0.0, e_max=3.5, n_points=1000,
-            nm_ticks=np.array((400, 500, 600, 800, 1000, 1500, 3000))):
+            nm_ticks=nm_ticks):
   """
   Broadens a stick spectrum.
   Input:
@@ -65,11 +66,10 @@ def broaden(singlet_name, triplet_name, energy="eV", broadening=0.2,
   ax_nm.set_xlabel("wavelength (nm)")
   ax_nm.xaxis.set_ticks_position("top")
   ax_nm.xaxis.set_label_position("top")
-
-  nm_positions = 1239.84193 / nm_ticks
-  ax_nm.set_xticks(nm_positions)
-  ax_nm.set_xticklabels(nm_ticks)
-
+  energy_ticks_for_nm = 1239.84193 / nm_ticks
+  ax_nm.set_xticks(energy_ticks_for_nm)
+  ax_nm.set_xticklabels([f'{int(nm)}' for nm in nm_ticks])
+  
   # main bit
   if singlet == 1:
     # load data
