@@ -109,6 +109,8 @@ def broaden(singlet_name, triplet_name, energy="eV", broadening=0.2,
     ax_ev.bar(triplet_e, -0.1, color=colours['orange'], width=0.05, alpha=0.5)
   else:
     singlet_broad = singlet_broad / np.max(singlet_broad)
+    ax_ev.plot(points, singlet_broad, label="singlet", color=colours['blue'])
+    ax_ev.bar(singlet_e, -0.1, color=colours['blue'], width=0.05, alpha=0.5)
   
   ax_ev.axhline(0, color="black", linestyle="--")
   if visible == True:
