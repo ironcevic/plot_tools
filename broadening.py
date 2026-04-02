@@ -1,4 +1,4 @@
-import os
+ import os
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -70,7 +70,10 @@ def broaden(singlet_name, triplet_name, energy="eV", broadening=0.2,
   energy_ticks_for_nm = 1239.84193 / nm_ticks
   ax_nm.set_xticks(energy_ticks_for_nm)
   ax_nm.set_xticklabels(nm_ticks)
- 
+
+  singlet_broad = []
+  triplet_broad = []
+              
   # main bit
   if singlet == 1:
     # load data
@@ -85,9 +88,6 @@ def broaden(singlet_name, triplet_name, energy="eV", broadening=0.2,
     for signal_idx in range(len(singlet_e)):
       singlet_broad += singlet_i[signal_idx] * \
       np.exp(-(points - singlet_e[signal_idx])**2 / (2 * broadening**2))
-    # plot
-    ax_ev.plot(points, singlet_broad, label="singlet", color=colours['blue'])
-    ax_ev.bar(singlet_e, -1, color=colours['blue'], width=0.05, alpha=0.5)
 
   if triplet == 1:
     # load data
@@ -103,9 +103,13 @@ def broaden(singlet_name, triplet_name, energy="eV", broadening=0.2,
       triplet_broad += triplet_i[triplet_idx] * \
       np.exp(-(points - triplet_e[triplet_idx])**2 / (2 * broadening**2))
     # plot
+    triplet_broad = triplet_broad / np.max([singlet_broad, triplet_broad])
+    singlet_broad = singlet_broad / np.max([singlet_broad, triplet_broad])
     ax_ev.plot(points, triplet_broad, label="triplet", color=colours['orange'])
-    ax_ev.bar(triplet_e, -1, color=colours['orange'], width=0.05, alpha=0.5)
-
+    ax_ev.bar(triplet_e, -0.1, color=colours['orange'], width=0.05, alpha=0.5)
+  else:
+    singlet_broad = singlet_broad / np.max(singlet_broad)
+  
   ax_ev.axhline(0, color="black", linestyle="--")
   if visible == True:
     ax_ev.axvline(3.2627419210526316, color="black", linestyle="--")
