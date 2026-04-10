@@ -86,8 +86,6 @@ def broaden(singlet_name, triplet_name, energy="eV", broadening=0.2,
     for signal_idx in range(len(singlet_e)):
       singlet_broad += singlet_i[signal_idx] * \
       np.exp(-(points - singlet_e[signal_idx])**2 / (2 * broadening**2))
-    # normalise 
-    singlet_broad = singlet_broad / np.max(singlet_broad)
 
   if triplet == 1:
     # load data
@@ -102,8 +100,6 @@ def broaden(singlet_name, triplet_name, energy="eV", broadening=0.2,
     for triplet_idx in range(len(triplet_e)): # Corrected loop variable
       triplet_broad += triplet_i[triplet_idx] * \
       np.exp(-(points - triplet_e[triplet_idx])**2 / (2 * broadening**2))
-    # normalise
-    triplet_broad = triplet_broad / np.max(triplet_broad)
 
   if singlet == 1 and triplet == 1: 
   # re-normalise and plot
